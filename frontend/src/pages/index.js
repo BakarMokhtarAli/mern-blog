@@ -1,0 +1,9 @@
+export { Home } from "./Home";
+export { Posts } from "./Posts";
+export { CreatePost } from "./CreatePost";
+export { UpdatePost } from "./UpdatePost";
+export { Dashboard } from "./Dashboard";
+export { Register } from "./Register";
+export { Login } from "./Login";
+export { UpdateUser } from "./UpdateUser";
+export { UpdateUserPassword } from "./UpdateUserPassword";
