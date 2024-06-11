@@ -7,3 +7,4 @@ export { Register } from "./Register";
 export { Login } from "./Login";
 export { UpdateUser } from "./UpdateUser";
 export { UpdateUserPassword } from "./UpdateUserPassword";
+export { PageNotFound } from "./PageNotFound";

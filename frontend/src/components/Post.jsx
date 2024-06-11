@@ -4,7 +4,7 @@ import { FaTrash } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { AlertDialog } from "./AlertDialog";
 import { useUser } from "../hooks/useUser";
-
+import { EmptyPosts } from "../components/EmptyPosts";
 export const Post = ({ post, showButtons }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);

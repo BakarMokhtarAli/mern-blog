@@ -20,7 +20,7 @@ export const Header = () => {
         </Link>
         <div className="flex items-center justify-center space-x-1 gap-4 underline-none">
           {user ? (
-            <div className="hidden space-x-1  md:inline-flex">
+            <div className="hidden space-x-1  md:inline-flex justify-center items-center gap-2">
               <Link to="/" className="btn btn-sm mx-3 btn-link">
                 Home
               </Link>
@@ -48,7 +48,7 @@ export const Header = () => {
             </div>
           ) : (
             <>
-              <div className="hidden space-x-1 md:inline-flex gap-2">
+              <div className="hidden space-x-1 md:inline-flex justify-center items-center gap-2">
                 <Link to="/" className="btn btn-sm mx-3 text-xl">
                   Home
                 </Link>

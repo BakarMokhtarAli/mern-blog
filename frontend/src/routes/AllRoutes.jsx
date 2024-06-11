@@ -8,6 +8,7 @@ import {
   Dashboard,
   Home,
   Login,
+  PageNotFound,
   Register,
   UpdatePost,
   UpdateUser,
@@ -61,6 +62,7 @@ export const AllRoutes = () => {
             </PrivateRoutes>
           }
         />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />
     </div>

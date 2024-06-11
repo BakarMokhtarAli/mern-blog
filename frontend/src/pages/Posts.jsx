@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Post, Loading } from "../components";
+import { Post, Loading, EmptyPosts } from "../components";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useUser } from "../hooks/useUser";
@@ -32,27 +32,33 @@ export const Posts = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="max-w-5xl flex justify-between items-center mx-6 mt-4">
+      {postData?.length === 0 ? (
+        <EmptyPosts />
+      ) : (
         <>
-          <div className="flex flex-row gap-1">
-            <p>Posts:</p>
-            <span className="bg-slate-950 text-white rounded-full shadow-md w-6 font-bold h-6 text-center">
-              {result}
-            </span>
+          <div className="max-w-5xl flex justify-between items-center mx-6 mt-4">
+            <>
+              <div className="flex flex-row gap-1">
+                <p>Posts:</p>
+                <span className="bg-slate-950 text-white rounded-full shadow-md w-6 font-bold h-6 text-center">
+                  {result}
+                </span>
+              </div>
+              <Link
+                to="/create-post"
+                className="py-2 px-2 rounded-md text-white bg-slate-950"
+              >
+                create a post
+              </Link>
+            </>
           </div>
-          <Link
-            to="/create-post"
-            className="py-2 px-2 rounded-md text-white bg-slate-950"
-          >
-            create a post
-          </Link>
+          <div className="max-w-5xl grid sm:grid-cols-2 md:grid-cols-3 gap-2 m-2 mx-auto">
+            {postData?.map((post) => (
+              <Post key={post._id} post={post} showButtons={true} />
+            ))}
+          </div>
         </>
-      </div>
-      <div className="max-w-5xl grid sm:grid-cols-2 md:grid-cols-3 gap-2 m-2 mx-auto">
-        {postData?.map((post) => (
-          <Post key={post._id} post={post} showButtons={true} />
-        ))}
-      </div>
+      )}
     </>
   );
 };
