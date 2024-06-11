@@ -32,7 +32,7 @@ export const Posts = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="max-w-5xl flex justify-between items-center mx-auto mt-4">
+      <div className="max-w-5xl flex justify-between items-center mx-6 mt-4">
         <>
           <div className="flex flex-row gap-1">
             <p>Posts:</p>

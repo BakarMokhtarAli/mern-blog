@@ -15,7 +15,7 @@ export const getAllPosts = catchAsync(async (req, res, next) => {
   const posts = await feature.query.populate({
     path: "author",
     model: "User",
-    select: "username",
+    select: "username photo",
   });
   res.status(200).json({
     status: `success`,

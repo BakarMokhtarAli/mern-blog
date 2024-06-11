@@ -8,14 +8,18 @@ export const UpdateUser = () => {
   const [loading, setLoading] = useState(false);
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
+  const [photo, setPhoto] = useState(null);
+  const [preview, setPreview] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     const getUser = async () => {
       try {
         const { data } = await axios.get(`/api/v1/users/${id}`);
+
         setUserName(data.user.username);
         setEmail(data.user.email);
+        setPreview(data.user.photo);
       } catch (error) {
         toast.error(error.response.data.message);
         console.log(error);
@@ -24,17 +28,27 @@ export const UpdateUser = () => {
     getUser();
   }, [id]);
 
+  const handlePhotoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+      setPhoto(file);
+      console.log(preview);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("username", username);
     formData.append("email", email);
+    formData.append("photo", photo);
 
     setLoading(true);
     try {
       const { data } = await axios.post(`/api/v1/users/${id}`, formData, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
       });
       console.log(data);
@@ -42,6 +56,8 @@ export const UpdateUser = () => {
       navigate("/dashboard");
       setUserName(""); // Update the state with the new data
       setEmail("");
+      setPhoto(null);
+      setPreview("");
     } catch (error) {
       toast.error(error.response.data.message);
       console.log(error);
@@ -57,6 +73,13 @@ export const UpdateUser = () => {
           Update User
         </h2>
         <form onSubmit={handleSubmit}>
+          <div>
+            <img
+              src={preview}
+              alt={username}
+              className="w-40 h-40 rounded-full mx-auto"
+            />
+          </div>
           <div className="mb-4">
             <label htmlFor="username" className="block text-gray-700">
               Username
@@ -85,6 +108,20 @@ export const UpdateUser = () => {
               required
             />
           </div>
+
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-gray-700">
+              upload photo
+            </label>
+            <input
+              onChange={handlePhotoChange}
+              className="w-full px-3 py-2 border rounded-lg"
+              id="photo"
+              type="file"
+              accept="image/*"
+            />
+          </div>
+
           <button
             type="submit"
             className="w-full py-2 px-4 bg-blue-600 text-white rounded-lg"

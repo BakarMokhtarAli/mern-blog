@@ -18,19 +18,30 @@ export const Header = () => {
         <Link to="/" className="flex items-center">
           <span className="text-2xl">plog</span>
         </Link>
-        <div className="flex items-center space-x-1 gap-4 underline-none">
+        <div className="flex items-center justify-center space-x-1 gap-4 underline-none">
           {user ? (
-            <div className="hidden space-x-1 md:inline-flex">
+            <div className="hidden space-x-1  md:inline-flex">
               <Link to="/" className="btn btn-sm mx-3 btn-link">
                 Home
               </Link>
               <Link to="/dashboard" className="btn btn-sm mx-3 btn-link">
                 dashboard
               </Link>
-              <span
-                onClick={() => setDropdown(!dropdown)}
-                className="bi bi-person-circle cursor-pointer text-2xl text-gray-700 dark:text-white"
-              ></span>
+              {user?.user.photo != "default.jpg" ? (
+                <img
+                  onClick={() => setDropdown(!dropdown)}
+                  src={user?.user.photo}
+                  alt={
+                    <span className="bi bi-person-circle cursor-pointer text-2xl text-gray-700 dark:text-white"></span>
+                  }
+                  className="cursor-pointer w-10 h-10 rounded-full text-gray-700 dark:text-white"
+                />
+              ) : (
+                <span
+                  onClick={() => setDropdown(!dropdown)}
+                  className="bi bi-person-circle cursor-pointer text-2xl text-gray-700 dark:text-white"
+                ></span>
+              )}
               {dropdown && (
                 <DropdownLoggedIn setDropdown={setDropdown} user={user} />
               )}
@@ -53,10 +64,14 @@ export const Header = () => {
             </>
           )}
           <div className="inline-flex md:hidden">
-            <span
-              onClick={() => setDropdown(!dropdown)}
-              className="bi bi-person-circle cursor-pointer text-2xl text-gray-700 dark:text-white"
-            ></span>
+            {user && (
+              <img
+                onClick={() => setDropdown(!dropdown)}
+                src={user?.user.photo}
+                alt={user?.user.username}
+                className="cursor-pointer w-10 h-10 rounded-full text-gray-700 dark:text-white"
+              />
+            )}
             {dropdown && user && (
               <DropdownLoggedIn setDropdown={setDropdown} user={user} />
             )}

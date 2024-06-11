@@ -33,7 +33,7 @@ export const Home = () => {
   return (
     <div>
       {loading && <Loading />}
-      <div className="max-w-5xl flex justify-between items-center mx-auto mt-4">
+      <div className="max-w-5xl flex justify-around items-center mr-10 mx-auto mt-4">
         <div className="flex flex-row gap-1">
           <p>Posts:</p>
           <span className="bg-slate-950 text-white rounded-full shadow-md w-6 font-bold h-6 text-center">

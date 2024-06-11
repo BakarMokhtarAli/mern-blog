@@ -3,10 +3,12 @@ import { FaEdit } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { AlertDialog } from "./AlertDialog";
+import { useUser } from "../hooks/useUser";
 
 export const Post = ({ post, showButtons }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const { user } = useUser();
 
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
@@ -22,10 +24,10 @@ export const Post = ({ post, showButtons }) => {
           setIsOpen={setIsOpen}
         />
       )}
-      <div className="max-w-xs container bg-white border rounded-xl shadow-lg transform transition duration-500 hover:scale-105 hover:shadow-2xl">
+      <div className="max-w-xs container bg-white border rounded-xl shadow-lg transform transition duration-500 hover:scale-105 hover:shadow-2xl mx-auto m-2">
         <div>
           {/* <span className="text-white text-xs font-bold rounded-lg bg-green-500 inline-block mt-4 ml-4 py-1.5 px-4 cursor-pointer"></span> */}
-          <h1 className="text-2xl mt-2 ml-4 font-bold text-gray-800 cursor-pointer hover:text-gray-900 transition duration-100">
+          <h1 className="w-full border-b-2 text-xl mt-2 p-3 font-bold text-gray-800 cursor-pointer hover:text-gray-900 transition duration-100">
             {post.title}
           </h1>
           <p className="ml-4 mt-1 mb-2 text-gray-700 cursor-pointer">
@@ -55,14 +57,14 @@ export const Post = ({ post, showButtons }) => {
           <div className="flex items-center space-x-2">
             <img
               className="w-10 rounded-full"
-              src="https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg"
-              alt="sara"
+              src={post.author?.photo}
+              alt={post.author?.username}
             />
             <h2 className="text-gray-800 font-bold cursor-pointer">
               {post.author?.username || "deleted author"}
             </h2>
           </div>
-          {showButtons && (
+          {user?.user._id === post.author?._id && (
             <div className="flex space-x-2">
               <div className="flex space-x-1 items-center">
                 <Link

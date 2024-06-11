@@ -12,6 +12,7 @@ import {
   signUp,
   updatePassword,
 } from "../controllers/authController.js";
+import upload from "../config/multer.js";
 
 const router = express.Router();
 
@@ -22,7 +23,7 @@ router.post("/sign-in", SignIn);
 
 router.route("/:id").get(protect, getOne);
 router.post("/update-password", protect, updatePassword);
-router.post("/:id", protect, updateUser);
+router.post("/:id", protect, upload.single("photo"), updateUser);
 router.delete("/delete/:id", protect, deleteUser);
 
 export default router;
