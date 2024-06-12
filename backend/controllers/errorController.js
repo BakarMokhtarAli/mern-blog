@@ -47,15 +47,14 @@ const hadnleValidationError = (err) => {
 export default function globalError(err, req, res, next) {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === "start") {
+    sendErrDev(err, res);
+  } else {
     // invalid database ids
     if (err.name === "CastError") err = handleCastErrorDb(err);
     // validation errors
     if (err.name === "ValidationError") err = hadnleValidationError(err);
     if (err.code === 11000) handleDuplicateFieldError(err);
     sendErrorProd(err, res);
-  } else {
-    // if (err.code === 11000) sendErrDev(err, res);
-    sendErrDev(err, res);
   }
 }
