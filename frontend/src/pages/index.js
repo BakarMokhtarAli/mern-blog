@@ -8,3 +8,4 @@ export { Login } from "./Login";
 export { UpdateUser } from "./UpdateUser";
 export { UpdateUserPassword } from "./UpdateUserPassword";
 export { PageNotFound } from "./PageNotFound";
+export { EmailVerified } from "./EmailVerified";

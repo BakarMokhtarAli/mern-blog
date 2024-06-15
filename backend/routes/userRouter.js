@@ -11,11 +11,13 @@ import {
   protect,
   signUp,
   updatePassword,
+  verifyEmail,
 } from "../controllers/authController.js";
 import upload from "../config/multer.js";
 
 const router = express.Router();
 
+router.get("/verify-email", verifyEmail);
 router.route("/").get(protect, getAllUsers);
 router.route("/posts").get(protect, getUserPosts);
 router.post("/sign-up", signUp);

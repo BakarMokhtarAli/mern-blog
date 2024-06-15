@@ -4,20 +4,59 @@ import AppError from "../utils/AppError.js";
 import APPError from "../utils/AppError.js";
 import jwt from "jsonwebtoken";
 import { jwtSecret } from "../config/config.js";
+import { sendVerificationEmail } from "../utils/Email.js";
+import crypto from "crypto";
 
 export const signUp = catchAsync(async (req, res, next) => {
-  const existingUser = await User.findOne({ email: req.body.email });
+  const { username, email, password, passwordConfirm } = req.body;
+  if (!passwordConfirm) {
+    return next(new APPError("please confirm your password", 400));
+  }
+  if (password !== passwordConfirm) {
+    return next(new APPError("Passwords do not match", 400));
+  }
+  const existingUser = await User.findOne({ email: email });
   if (existingUser) {
     return next(new APPError(`Email is already exist`, 400));
   }
+
   //   console.log(existingUser);
-  const userInfo = User(req.body);
-  await userInfo.save();
-  res.status(201).json({
-    status: "success",
-    user: userInfo,
+  const verificationToken = crypto.randomBytes(32).toString("hex");
+  const userInfo = User({
+    username,
+    email,
+    password,
+    password,
+    verificationToken,
   });
+  await userInfo.save();
+  sendVerificationEmail(email, verificationToken);
+  res
+    .status(201)
+    .json(
+      "User created successfully!, please check your email to verify your account!"
+    );
 });
+
+export const verifyEmail = async (req, res, next) => {
+  const { token } = req.query;
+  try {
+    const user = await User.findOne({ verificationToken: token });
+
+    if (!user) {
+      return res.status(400).json("Invalid or expired token.");
+    }
+
+    user.isVerified = true;
+    user.verificationToken = undefined; // Clear the token after verification
+    await user.save();
+
+    // res.status(200).json("Email verified successfully!");
+    res.redirect("/email-verified");
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const SignIn = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;

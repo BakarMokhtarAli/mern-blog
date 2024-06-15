@@ -1,11 +1,10 @@
-import { Routes, Route } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { Footer, Header } from "../components";
-import { PrivateRoutes } from "./PrivateRoutes";
-import { Navigate } from "react-router-dom";
 import { useUser } from "../hooks/useUser";
 import {
   CreatePost,
   Dashboard,
+  EmailVerified,
   Home,
   Login,
   PageNotFound,
@@ -14,12 +13,16 @@ import {
   UpdateUser,
   UpdateUserPassword,
 } from "../pages";
+import { PrivateRoutes } from "./PrivateRoutes";
 
 export const AllRoutes = () => {
   const { user } = useUser();
 
   return (
     <div>
+      <Routes>
+        <Route path="/email-verified" element={<EmailVerified />} />
+      </Routes>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -62,6 +65,7 @@ export const AllRoutes = () => {
             </PrivateRoutes>
           }
         />
+
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />

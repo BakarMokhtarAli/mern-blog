@@ -22,20 +22,22 @@ const userSchema = mongoose.Schema(
       required: [true, "password is required"],
       select: false,
     },
-    passwordConfirm: {
-      type: String,
-      required: [true, "password confrim is required"],
-      validate: {
-        validator: function (pass) {
-          return pass === this.password;
-        },
-        message: "passwords are not same",
-      },
-    },
+    // passwordConfirm: {
+    //   type: String,
+    //   required: [true, "password confrim is required"],
+    //   validate: {
+    //     validator: function (pass) {
+    //       return pass === this.password;
+    //     },
+    //     message: "passwords are not same",
+    //   },
+    // },
     photo: {
       type: String,
       default: "default.jpg",
     },
+    isVerified: { type: Boolean, default: false },
+    verificationToken: { type: String },
   },
   { timestamps: true }
 );
