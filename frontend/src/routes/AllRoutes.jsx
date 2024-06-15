@@ -4,7 +4,6 @@ import { useUser } from "../hooks/useUser";
 import {
   CreatePost,
   Dashboard,
-  EmailVerified,
   Home,
   Login,
   PageNotFound,
@@ -20,9 +19,6 @@ export const AllRoutes = () => {
 
   return (
     <div>
-      <Routes>
-        <Route path="/email-verified" element={<EmailVerified />} />
-      </Routes>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
