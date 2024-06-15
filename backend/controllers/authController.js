@@ -52,7 +52,7 @@ export const verifyEmail = async (req, res, next) => {
     await user.save();
 
     // res.status(200).json("Email verified successfully!");
-    res.redirect("/email-verified");
+    res.redirect("https://mern-blog-pt2t.onrender.com/email-verified");
   } catch (error) {
     next(error);
   }
